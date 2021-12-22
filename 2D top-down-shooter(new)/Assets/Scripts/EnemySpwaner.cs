@@ -6,7 +6,6 @@ public class EnemySpwaner : MonoBehaviour
 {
     public GameObject zombie;
     public GameObject bigZombie;
-    public GameObject smallZombie;
     public int alreadySpawn = 0;
     public float nextspawn = 0f;
     public float spawnCooldown = 1f;
@@ -28,11 +27,6 @@ public class EnemySpwaner : MonoBehaviour
         {
             SpawnLocation(bigZombie);
         }
-        else if (GameManager.instance.wave >= 7 && alreadySpawn % 10 == 0)
-        {
-            SpawnLocation(smallZombie);
-        }
-
         if(alreadySpawn == enemyperwave[GameManager.instance.wave - 1])
         {
             GameManager.instance.ongoingwave = false;
