@@ -6,10 +6,21 @@ public class EnemySpwaner : MonoBehaviour
 {
     public GameObject zombie;
     public GameObject bigZombie;
-    public int alreadySpawn = 0;
-    public float nextspawn = 0f;
+    private int alreadySpawn = 0;
+    private float nextspawn = 0f;
     public float spawnCooldown = 1f;
-    public int[] enemyperwave = {5, 10, 15, 20, 25, 30, 35, 40, 45, 55};
+    private int spawnscnt = 0;
+    private int[] enemyperwave = {5, 10, 15, 20, 25, 30, 35, 40, 45, 55};
+    private List<Transform> SpawnLocations = new List<Transform>();
+
+    private void Start()
+    {
+        foreach(Transform child in gameObject.transform)
+        {
+            spawnscnt++;
+            SpawnLocations.Add(child.transform);
+        }
+    }
 
     private void Update() {
         if(GameManager.instance.ongoingwave == true && Time.time >= nextspawn){
@@ -36,22 +47,7 @@ public class EnemySpwaner : MonoBehaviour
 
     private void SpawnLocation(GameObject enemyprefab)
     {
-        int location = Random.Range(1, 5);
-        if(location == 1){
-            float locationy = Random.Range(4f, -4f);
-            Instantiate(enemyprefab, new Vector3(8, locationy, 0),  new Quaternion(0, 0, 0, 0));
-        }
-        else if(location == 2){
-            float locationx = Random.Range(8f, -8f);
-            Instantiate(enemyprefab, new Vector3(locationx, 4, 0),  new Quaternion(0, 0, 0, 0));
-        }
-        else if(location == 3){
-            float locationy = Random.Range(4f, -4f);
-            Instantiate(enemyprefab, new Vector3(-8, locationy, 0),  new Quaternion(0, 0, 0, 0));
-        }
-        else if(location == 4){
-            float locationx = Random.Range(8f, -8f);
-            Instantiate(enemyprefab, new Vector3(locationx, -4, 0),  new Quaternion(0, 0, 0, 0));
-        }
+        int location = Random.Range(0, spawnscnt);
+        Instantiate(enemyprefab, SpawnLocations[location].position,  new Quaternion(0, 0, 0, 0));
     }
 }
