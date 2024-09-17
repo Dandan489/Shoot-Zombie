@@ -5,6 +5,7 @@ using UnityEngine;
 public class CameraMotor : MonoBehaviour
 {
     private Transform player;
+
     void Start()
     {
         player = GameObject.Find("Player").transform;

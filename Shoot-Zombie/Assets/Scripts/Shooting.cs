@@ -6,9 +6,11 @@ public class Shooting : MonoBehaviour
 {
     private Transform player;
     public GameObject bulletPrefab;
+    public GameObject muzzleFlash;
 
     public float[] bulletForce = {1f, 2f};
     private float nextshoot = 0.0f;
+    private float lastshoot = 0.0f;
     public float[] shootcooldown = {0.5f, 0.2f};
 
     public int[] maxAmmo = {11, 25};
@@ -25,9 +27,15 @@ public class Shooting : MonoBehaviour
     }
     
     private void Update(){
+        if (muzzleFlash.activeSelf && Time.time - lastshoot >= 0.15f)
+        {
+            muzzleFlash.SetActive(false);
+        }
         if (Input.GetMouseButton(0) && Time.time > nextshoot && ammoCount[currentWeapon] !=0 && !reloading)
         {
             nextshoot = Time.time + shootcooldown[currentWeapon];
+            lastshoot = Time.time;
+            muzzleFlash.SetActive(true);
             Shoot();
         }
         if (Input.GetKeyDown(KeyCode.R) && GameManager.instance.isreloading == false)

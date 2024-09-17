@@ -5,12 +5,14 @@ using UnityEngine;
 public class Player : Fighter
 {
     public float moveSpeed = 5f;
+    public Vector3 startingPos;
     private Rigidbody2D rigi;
     private Vector2 movement;
     private Vector2 mousePos;
     private Camera cam;
 
     private void Start() {
+        gameObject.transform.position = startingPos;
         rigi = gameObject.GetComponent<Rigidbody2D>();
         cam = Camera.main;
     }
